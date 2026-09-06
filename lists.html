@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Інструменти для роботи зі списками онлайн — стовпчик у рядок, сортування</title>
+<meta name="description" content="Безкоштовні онлайн інструменти для роботи зі списками: стовпчик у рядок, рядок у стовпчик, сортування, видалення дублікатів, очищення тексту.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="kyrlat.com">
+  <meta name="keywords" content="стовпчик у рядок онлайн, рядок у стовпчик, сортування списку онлайн, видалення дублікатів, очищення тексту, список через кому онлайн">
+  <link rel="canonical" href="https://kyrlat.com/lists.html">
+  <!-- hreflang -->
+  <link rel="alternate" hreflang="uk" href="https://kyrlat.com/lists.html">
+  <link rel="alternate" hreflang="en" href="https://kyrlat.com/lists-en.html">
+  <link rel="alternate" hreflang="be" href="https://kyrlat.com/lists-be.html">
+  <link rel="alternate" hreflang="bg" href="https://kyrlat.com/lists-bg.html">
+  <link rel="alternate" hreflang="ru" href="https://kyrlat.com/lists-ru.html">
+  <link rel="alternate" hreflang="sr" href="https://kyrlat.com/lists-sr.html">
+  <link rel="alternate" hreflang="x-default" href="https://kyrlat.com/lists.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kyrlat.com/lists.html">
+  <meta property="og:title" content="Інструменти для роботи зі списками онлайн — стовпчик у рядок, сортування">
+  <meta property="og:description" content="Безкоштовні онлайн інструменти для роботи зі списками: стовпчик у рядок, рядок у стовпчик, сортування, видалення дублікатів, очищення тексту.">
+  <meta property="og:locale" content="uk_UA">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Інструменти для роботи зі списками онлайн — стовпчик у рядок, сортування">
+  <meta name="twitter:description" content="Безкоштовні онлайн інструменти для роботи зі списками: стовпчик у рядок, рядок у стовпчик, сортування, видалення дублікатів, очищення тексту.">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R9XKLV5GBS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-R9XKLV5GBS");
+  </script>
+<style>
+:root {
+  --bg:#0d0d0f; --bg2:#141418; --surface:#1c1c22; --border:#2a2a35;
+  --accent-red:#ff4d6d; --accent-grn:#4dffb4; --accent-blue:#7b8cff;
+  --text:#e8e8f0; --text-muted:#6b6b80;
+  --hl-lat:rgba(255,77,109,0.32); --hl-lat-b:rgba(255,77,109,0.7);
+  --hl-cyr:rgba(77,255,180,0.28); --hl-cyr-b:rgba(77,255,180,0.6);
+  --sidebar-w:220px;
+}
+[data-theme="light"] {
+  --bg:#f4f4f8; --bg2:#fff; --surface:#eaeaf0; --border:#d0d0dc;
+  --text:#1a1a2e; --text-muted:#7070a0;
+  --accent-red:#e0203c; --accent-grn:#00aa78;
+  --hl-lat:rgba(224,32,60,0.18); --hl-lat-b:rgba(224,32,60,0.6);
+  --hl-cyr:rgba(0,170,120,0.18); --hl-cyr-b:rgba(0,170,120,0.6);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;min-height:100vh;}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;padding:0 20px;height:52px;
+}
+.topbar-logo{font-family:'Unbounded',sans-serif;font-weight:900;font-size:18px;letter-spacing:-0.5px;cursor:pointer;}
+.topbar-logo .red{color:var(--accent-red);}
+.topbar-logo .dim{color:var(--text-muted);font-weight:400;}
+.topbar-logo .grn{color:var(--accent-grn);}
+.topbar-spacer{flex:1;}
+.theme-toggle{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--surface);border:1px solid var(--border);
+  cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;
+}
+.theme-toggle:hover{border-color:var(--accent-grn);}
+
+/* ── LAYOUT ── */
+.layout{display:flex;padding-top:52px;min-height:100vh;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;top:52px;left:0;bottom:0;
+  width:var(--sidebar-w);
+  background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow-y:auto;z-index:50;
+}
+.sidebar-section-title{
+  font-size:9px;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--text-muted);padding:16px 16px 6px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 16px;cursor:pointer;
+  font-size:13px;font-weight:700;color:var(--text-muted);
+  border-left:3px solid transparent;
+  transition:all 0.15s;text-decoration:none;
+}
+.nav-item:hover{color:var(--text);background:var(--surface);}
+.nav-item.active{
+  color:var(--accent-grn);
+  border-left-color:var(--accent-grn);
+  background:color-mix(in srgb,var(--accent-grn) 8%,transparent);
+}
+.nav-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.nav-divider{height:1px;background:var(--border);margin:8px 16px;}
+
+/* lang bar in sidebar */
+.sidebar-langs{
+  padding:12px 16px;display:flex;flex-wrap:wrap;gap:4px;
+  border-top:1px solid var(--border);margin-top:auto;
+}
+.lang-btn{
+  padding:3px 9px;border-radius:20px;font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:700;cursor:pointer;
+  border:1px solid var(--border);background:var(--surface);color:var(--text-muted);transition:all 0.15s;
+  text-decoration:none;
+}
+.lang-btn:hover{color:var(--text);}
+.lang-btn.active{
+  background:color-mix(in srgb,var(--accent-grn) 12%,transparent);
+  border-color:var(--accent-grn);color:var(--accent-grn);
+}
+
+/* ── MAIN CONTENT ── */
+.main{
+  margin-left:var(--sidebar-w);flex:1;
+  padding:32px 28px 100px;max-width:860px;
+}
+.tool-page{display:none;}
+.tool-page.active{display:block;animation:fadeUp 0.2s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.tool-header{margin-bottom:24px;}
+.tool-title{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(18px,3vw,28px);letter-spacing:-0.5px;line-height:1.2;}
+.tool-title .hl-red{color:var(--accent-red);}
+.tool-title .hl-grn{color:var(--accent-grn);}
+.tool-title .hl-blue{color:var(--accent-blue);}
+.tool-sub{margin-top:6px;color:var(--text-muted);font-size:12px;}
+
+/* ── COMMON CONTROLS ── */
+.block-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;}
+.input-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center;}
+.btn{
+  padding:7px 14px;border-radius:6px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  cursor:pointer;border:1px solid transparent;transition:all 0.15s;white-space:nowrap;
+}
+.btn-red{background:rgba(255,77,109,0.14);border-color:rgba(255,77,109,0.4);color:var(--accent-red);}
+.btn-red:hover{background:rgba(255,77,109,0.26);}
+.btn-grn{background:rgba(77,255,180,0.1);border-color:rgba(77,255,180,0.35);color:var(--accent-grn);}
+.btn-grn:hover{background:rgba(77,255,180,0.2);}
+.btn-blue{background:rgba(123,140,255,0.12);border-color:rgba(123,140,255,0.4);color:var(--accent-blue);}
+.btn-blue:hover{background:rgba(123,140,255,0.22);}
+.btn-ghost{background:var(--surface);border-color:var(--border);color:var(--text-muted);}
+.btn-ghost:hover{color:var(--text);border-color:#666;}
+.btn-primary{background:var(--accent-grn);border-color:var(--accent-grn);color:#0d0d0f;font-weight:700;}
+.btn-primary:hover{filter:brightness(1.1);}
+.btn-sm{padding:4px 10px;font-size:11px;}
+.sep{width:1px;height:24px;background:var(--border);flex-shrink:0;}
+
+textarea.main-ta{
+  width:100%;min-height:160px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:'JetBrains Mono',monospace;
+  font-size:14px;line-height:1.75;padding:14px;resize:vertical;outline:none;
+  transition:border-color 0.15s;
+}
+textarea.main-ta:focus{border-color:var(--accent-grn);}
+textarea.main-ta::placeholder{color:var(--text-muted);}
+
+.result-box{
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:14px;font-size:14px;line-height:1.75;min-height:60px;
+  white-space:pre-wrap;word-break:break-all;
+  font-family:'JetBrains Mono',monospace;
+}
+.result-box.empty{color:var(--text-muted);font-style:italic;}
+
+/* ── STATS ── */
+.stats-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;min-height:28px;align-items:center;}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid transparent;}
+.chip-red{background:rgba(255,77,109,0.12);border-color:rgba(255,77,109,0.3);color:var(--accent-red);}
+.chip-grn{background:rgba(77,255,180,0.1);border-color:rgba(77,255,180,0.25);color:var(--accent-grn);}
+.chip-ok{background:rgba(77,255,180,0.08);border-color:rgba(77,255,180,0.2);color:var(--accent-grn);}
+.chip-dim{background:var(--surface);border-color:var(--border);color:var(--text-muted);}
+.chip-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+.blink{animation:blink 1.8s infinite;}
+
+/* ── KYR-LAT highlights ── */
+.hl-span{border-radius:2px;padding:0 1px;cursor:default;position:relative;font-weight:700;transition:filter 0.1s;}
+.hl-span:hover{filter:brightness(1.2);}
+.hl-lat{background:var(--hl-lat);outline:1px solid var(--hl-lat-b);color:var(--accent-red);}
+.hl-cyr{background:var(--hl-cyr);outline:1px solid var(--hl-cyr-b);color:var(--accent-grn);}
+.hl-span[data-tip]:hover::after{
+  content:attr(data-tip);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);
+  background:var(--bg2);border:1px solid var(--border);color:var(--text);
+  font-size:11px;padding:4px 8px;border-radius:4px;white-space:nowrap;pointer-events:none;z-index:10;
+}
+.fr-panel{
+  display:none;background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;padding:12px 16px;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;
+}
+.fr-panel.open{display:flex;}
+.fr-input{
+  flex:1;min-width:120px;background:var(--bg);border:1px solid var(--border);
+  border-radius:4px;padding:6px 10px;color:var(--text);
+  font-family:'JetBrains Mono',monospace;font-size:13px;outline:none;
+}
+.fr-input:focus{border-color:var(--accent-grn);}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--text-muted);}
+.legend-item{display:flex;align-items:center;gap:7px;}
+.swatch{width:16px;height:12px;border-radius:3px;display:inline-block;}
+.sw-lat{background:var(--hl-lat);outline:1px solid var(--hl-lat-b);}
+.sw-cyr{background:var(--hl-cyr);outline:1px solid var(--hl-cyr-b);}
+
+/* ── CASE TOOL ── */
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:16px;}
+.case-btn{
+  padding:10px 8px;border-radius:8px;font-size:12px;font-weight:700;
+  cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--text-muted);
+  transition:all 0.15s;text-align:center;
+}
+.case-btn:hover{border-color:var(--accent-blue);color:var(--accent-blue);background:rgba(123,140,255,0.08);}
+.case-btn.active{border-color:var(--accent-blue);color:var(--accent-blue);background:rgba(123,140,255,0.12);}
+.case-example{font-size:10px;color:var(--text-muted);margin-top:3px;font-weight:400;}
+
+/* ── LIST TOOLS ── */
+.lt-tabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:0;}
+.lt-tab{
+  padding:7px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  cursor:pointer;border:1px solid transparent;border-bottom:none;
+  border-radius:6px 6px 0 0;background:var(--surface);color:var(--text-muted);
+  transition:all 0.15s;margin-bottom:-1px;
+}
+.lt-tab:hover{color:var(--text);}
+.lt-tab.active{background:var(--bg2);color:var(--accent-blue);border-color:var(--border);border-bottom-color:var(--bg2);}
+.lt-panel{display:none;}
+.lt-panel.active{display:block;}
+.lt-opts{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:14px;}
+.lt-check{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-muted);cursor:pointer;user-select:none;}
+.lt-check input{accent-color:var(--accent-blue);width:14px;height:14px;cursor:pointer;}
+.lt-check:hover{color:var(--text);}
+.lt-radio{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-muted);cursor:pointer;}
+.lt-radio input{accent-color:var(--accent-blue);width:14px;height:14px;cursor:pointer;}
+.lt-radio-group{display:flex;flex-direction:column;gap:6px;}
+.lt-two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.lt-col{display:flex;flex-direction:column;gap:6px;}
+.lt-ta{min-height:180px!important;}
+.lt-stat{font-size:11px;color:var(--text-muted);min-height:16px;}
+.lt-sep-input{
+  background:var(--bg);border:1px solid var(--border);border-radius:4px;
+  padding:5px 10px;color:var(--text);font-family:'JetBrains Mono',monospace;
+  font-size:13px;outline:none;width:90px;
+}
+.lt-sep-input:focus{border-color:var(--accent-blue);}
+
+/* ── FLASH ── */
+#flash{
+  display:none;position:fixed;bottom:20px;right:20px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;
+  z-index:200;pointer-events:none;
+}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#flash.show{display:block;animation:fi 0.2s ease;}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;color:var(--text-muted);font-size:11px;
+  padding:24px 0 16px;opacity:0.5;
+  display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.footer-email{color:var(--accent-grn);text-decoration:none;opacity:0.8;}
+.footer-email:hover{opacity:1;}
+
+/* ── MOBILE bottom nav ── */
+.mobile-nav{display:none;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .sidebar{display:none;}
+  .main{margin-left:0;padding:16px 14px 90px;}
+  .mobile-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:100;
+    background:var(--bg2);border-top:1px solid var(--border);
+    justify-content:space-around;align-items:center;padding:6px 0;
+  }
+  .mob-nav-item{
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    font-size:9px;font-weight:700;color:var(--text-muted);cursor:pointer;
+    padding:4px 8px;border-radius:8px;transition:all 0.15s;text-align:center;
+    border:none;background:transparent;font-family:'JetBrains Mono',monospace;
+  }
+  .mob-nav-item .mob-icon{font-size:20px;}
+  .mob-nav-item.active{color:var(--accent-grn);}
+  .lang-btn{font-size:9px;padding:2px 7px;}
+  .lt-two-col{grid-template-columns:1fr;}
+  .topbar-logo{font-size:15px;}
+}
+@media(max-width:400px){
+  .btn{padding:6px 9px;font-size:11px;}
+  .btn-row .sep{display:none;}
+}
+
+/* ── SEO ── */
+.seo-section{margin-top:48px;padding-top:36px;border-top:1px solid var(--border);}
+.seo-h1{font-size:clamp(16px,3vw,24px);font-weight:900;letter-spacing:-0.5px;margin-bottom:10px;line-height:1.2;}
+.seo-h2{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text);}
+.seo-intro{font-size:13px;line-height:1.7;color:var(--text-muted);margin-bottom:20px;max-width:680px;}
+.seo-how{margin-bottom:20px;}
+.seo-steps{padding-left:20px;display:flex;flex-direction:column;gap:5px;}
+.seo-steps li{font-size:13px;line-height:1.6;color:var(--text-muted);}
+.seo-faq{display:flex;flex-direction:column;gap:8px;}
+.seo-faq-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;}
+.seo-faq-q{font-size:13px;font-weight:700;margin-bottom:4px;color:var(--text);}
+.seo-faq-a{font-size:12px;line-height:1.6;color:var(--text-muted);}
+
+/* ── SEO TYPES GRID ── */
+.seo-types { margin-bottom: 24px; }
+.seo-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px; margin-top: 12px;
+}
+.seo-type-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 16px;
+  transition: border-color 0.15s;
+}
+.seo-type-card:hover { border-color: var(--accent-blue); }
+.seo-type-name {
+  font-size: 13px; font-weight: 700; color: var(--accent-blue);
+  margin-bottom: 6px; font-family: 'JetBrains Mono', monospace;
+}
+.seo-type-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px; }
+.seo-type-example {
+  font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted); background: var(--surface);
+  padding: 4px 8px; border-radius: 4px;
+}
+.seo-usecases { margin-bottom: 24px; }
+/* ── TOPBAR LANG SWITCHER ── */
+.topbar-langs { display: flex; gap: 4px; align-items: center; margin-right: 8px; }
+.topbar-lang {
+  padding: 3px 9px; border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text-muted);
+  transition: all 0.15s;
+}
+.topbar-lang:hover { color: var(--text); border-color: #666; }
+.topbar-lang.active {
+  background: color-mix(in srgb, var(--accent-grn) 12%, transparent);
+  border-color: var(--accent-grn); color: var(--accent-grn);
+}
+/* Remove sidebar lang section */
+.sidebar-langs { display: none; }
+@media(max-width:700px) {
+  .topbar-langs { gap: 2px; }
+  .topbar-lang { font-size: 9px; padding: 2px 6px; }
+}</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-logo"><span class="red">КИР</span><span class="dim"> ↔ </span><span class="grn">LAT</span></div>
+  <div class="topbar-spacer"></div>
+  <div class="topbar-langs">
+    <a class="topbar-lang active" href="lists.html">УКР</a>
+    <a class="topbar-lang" href="lists-en.html">ENG</a>
+    <a class="topbar-lang" href="lists-be.html">БЕЛ</a>
+    <a class="topbar-lang" href="lists-bg.html">БГ</a>
+    <a class="topbar-lang" href="lists-ru.html">РУС</a>
+    <a class="topbar-lang" href="lists-sr.html">СРП</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+</div>
+<div id="flash"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-section-title">Інструменти</div>
+    <a class="nav-item" href="index.html"><span class="nav-icon">🔤</span>КИР ↔ LAT</a>
+    <a class="nav-item" href="case.html"><span class="nav-icon">Аа</span>Регістр тексту</a>
+    <a class="nav-item active" href="lists.html"><span class="nav-icon">📋</span>Інструменти списків</a>
+  </nav>
+  <main class="main">
+    <div class="tool-header">
+      <div class="tool-title"><span class="hl-blue">📋</span> Інструменти для роботи зі списками онлайн</div>
+      <div class="tool-sub">Набір безкоштовних онлайн інструментів для перетворення, сортування та очищення списків. Обробляйте дані без встановлення програм — просто вставте список і отримайте результат миттєво.</div>
+    </div>
+    <div class="lt-tabs">
+      <button class="lt-tab active" onclick="ltSetTab('c2r')" id="lt-tab-c2r">Стовпчик → Рядок</button>
+      <button class="lt-tab" onclick="ltSetTab('r2c')" id="lt-tab-r2c">Рядок → Стовпчик</button>
+      <button class="lt-tab" onclick="ltSetTab('sort')" id="lt-tab-sort">Сортування</button>
+      <button class="lt-tab" onclick="ltSetTab('dedup')" id="lt-tab-dedup">Дублікати</button>
+      <button class="lt-tab" onclick="ltSetTab('trim')" id="lt-tab-trim">Очищення</button>
+    </div>
+    <!-- c2r -->
+    <div class="lt-panel active" id="lt-c2r">
+      <div class="lt-opts">
+        <div style="display:flex;flex-direction:column;gap:4px"><span class="block-label">Роздільник</span><input type="text" class="lt-sep-input" id="c2rSep" value=", " oninput="ltConvert('c2r')"></div>
+        <label class="lt-check"><input type="checkbox" id="c2rTrim" checked onchange="ltConvert('c2r')"> Прибрати пробіли</label>
+        <label class="lt-check"><input type="checkbox" id="c2rSkip" checked onchange="ltConvert('c2r')"> Пропускати порожні</label>
+        <label class="lt-check"><input type="checkbox" id="c2rLower" onchange="ltConvert('c2r')"> Малі літери</label>
+      </div>
+      <div class="lt-two-col">
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Вхід</div><div style="display:flex;gap:5px"><button class="btn btn-ghost btn-sm" onclick="ltDemo('c2r')">Демо</button><button class="btn btn-ghost btn-sm" onclick="ltClear('c2rIn','c2rOut','c2rStat')">✕</button></div></div>
+          <textarea class="main-ta lt-ta" id="c2rIn" oninput="ltConvert('c2r')" placeholder="яблуко
+груша
+слива"></textarea>
+          <div class="lt-stat" id="c2rStat"></div>
+        </div>
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Результат</div><button class="btn btn-primary btn-sm" onclick="ltCopy('c2rOut')">⎘</button></div>
+          <div class="result-box lt-ta" id="c2rOut"><span style="color:var(--text-muted);font-style:italic">Результат…</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- r2c -->
+    <div class="lt-panel" id="lt-r2c">
+      <div class="lt-opts">
+        <div style="display:flex;flex-direction:column;gap:4px"><span class="block-label">Роздільник</span><input type="text" class="lt-sep-input" id="r2cSep" value="," oninput="ltConvert('r2c')"></div>
+        <label class="lt-check"><input type="checkbox" id="r2cTrim" checked onchange="ltConvert('r2c')"> Прибрати пробіли</label>
+        <label class="lt-check"><input type="checkbox" id="r2cSkip" checked onchange="ltConvert('r2c')"> Пропускати порожні</label>
+      </div>
+      <div class="lt-two-col">
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Вхід</div><div style="display:flex;gap:5px"><button class="btn btn-ghost btn-sm" onclick="ltDemo('r2c')">Демо</button><button class="btn btn-ghost btn-sm" onclick="ltClear('r2cIn','r2cOut','r2cStat')">✕</button></div></div>
+          <textarea class="main-ta lt-ta" id="r2cIn" oninput="ltConvert('r2c')" placeholder="яблуко, груша, слива"></textarea>
+          <div class="lt-stat" id="r2cStat"></div>
+        </div>
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Результат</div><button class="btn btn-primary btn-sm" onclick="ltCopy('r2cOut')">⎘</button></div>
+          <div class="result-box lt-ta" id="r2cOut"><span style="color:var(--text-muted);font-style:italic">Результат…</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- sort -->
+    <div class="lt-panel" id="lt-sort">
+      <div class="lt-opts">
+        <div class="lt-radio-group">
+          <label class="lt-radio"><input type="radio" name="sortType" value="az" checked> А → Я</label>
+          <label class="lt-radio"><input type="radio" name="sortType" value="za"> Я → А</label>
+          <label class="lt-radio"><input type="radio" name="sortType" value="short"> Від коротких</label>
+          <label class="lt-radio"><input type="radio" name="sortType" value="long"> Від довгих</label>
+          <label class="lt-radio"><input type="radio" name="sortType" value="rand"> Випадковий</label>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <label class="lt-check"><input type="checkbox" id="sortTrim" checked> Прибрати пробіли</label>
+          <label class="lt-check"><input type="checkbox" id="sortSkip" checked> Пропускати порожні</label>
+        </div>
+      </div>
+      <div class="lt-two-col">
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Вхід</div><div style="display:flex;gap:5px"><button class="btn btn-ghost btn-sm" onclick="ltDemo('sort')">Демо</button><button class="btn btn-ghost btn-sm" onclick="ltClear('sortIn','sortOut','sortStat')">✕</button></div></div>
+          <textarea class="main-ta lt-ta" id="sortIn" placeholder="яблуко
+груша
+слива"></textarea>
+          <div class="lt-stat" id="sortStat"></div>
+        </div>
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Результат</div><button class="btn btn-primary btn-sm" onclick="ltCopy('sortOut')">⎘</button></div>
+          <div class="result-box lt-ta" id="sortOut"><span style="color:var(--text-muted);font-style:italic">Результат…</span></div>
+        </div>
+      </div>
+      <div style="margin-top:10px"><button class="btn btn-blue" onclick="ltDoSort()">▶ Сортувати</button></div>
+    </div>
+    <!-- dedup -->
+    <div class="lt-panel" id="lt-dedup">
+      <div class="lt-opts">
+        <div class="lt-radio-group">
+          <label class="lt-radio"><input type="radio" name="dedupMode" value="remove" checked> Видалити дублікати</label>
+          <label class="lt-radio"><input type="radio" name="dedupMode" value="only"> Тільки дублікати</label>
+          <label class="lt-radio"><input type="radio" name="dedupMode" value="count"> Порахувати</label>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <label class="lt-check"><input type="checkbox" id="dedupCase"> Ігнорувати регістр</label>
+          <label class="lt-check"><input type="checkbox" id="dedupTrim" checked> Ігнорувати пробіли</label>
+        </div>
+      </div>
+      <div class="lt-two-col">
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Вхід</div><div style="display:flex;gap:5px"><button class="btn btn-ghost btn-sm" onclick="ltDemo('dedup')">Демо</button><button class="btn btn-ghost btn-sm" onclick="ltClear('dedupIn','dedupOut','dedupStat')">✕</button></div></div>
+          <textarea class="main-ta lt-ta" id="dedupIn" placeholder="яблуко
+груша
+слива"></textarea>
+          <div class="lt-stat" id="dedupStat"></div>
+        </div>
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Результат</div><button class="btn btn-primary btn-sm" onclick="ltCopy('dedupOut')">⎘</button></div>
+          <div class="result-box lt-ta" id="dedupOut"><span style="color:var(--text-muted);font-style:italic">Результат…</span></div>
+        </div>
+      </div>
+      <div style="margin-top:10px"><button class="btn btn-blue" onclick="ltDoDedup()">▶ Обробити</button></div>
+    </div>
+    <!-- trim -->
+    <div class="lt-panel" id="lt-trim">
+      <div class="lt-opts" style="flex-direction:column;gap:7px">
+        <label class="lt-check"><input type="checkbox" id="trimSpaces" checked> Прибрати пробіли</label>
+        <label class="lt-check"><input type="checkbox" id="trimDouble"> Подвійні пробіли</label>
+        <label class="lt-check"><input type="checkbox" id="trimEmpty" checked> Порожні рядки</label>
+        <label class="lt-check"><input type="checkbox" id="trimDblEmpty"> Подвійні порожні</label>
+        <label class="lt-check"><input type="checkbox" id="trimNums"> Нумерацію</label>
+        <label class="lt-check"><input type="checkbox" id="trimBullets"> Маркери</label>
+      </div>
+      <div class="lt-two-col" style="margin-top:12px">
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Вхід</div><div style="display:flex;gap:5px"><button class="btn btn-ghost btn-sm" onclick="ltDemo('trim')">Демо</button><button class="btn btn-ghost btn-sm" onclick="ltClear('trimIn','trimOut','trimStat')">✕</button></div></div>
+          <textarea class="main-ta lt-ta" id="trimIn" placeholder="яблуко
+груша
+слива"></textarea>
+          <div class="lt-stat" id="trimStat"></div>
+        </div>
+        <div class="lt-col">
+          <div class="input-header"><div class="block-label">Результат</div><button class="btn btn-primary btn-sm" onclick="ltCopy('trimOut')">⎘</button></div>
+          <div class="result-box lt-ta" id="trimOut"><span style="color:var(--text-muted);font-style:italic">Результат…</span></div>
+        </div>
+      </div>
+      <div style="margin-top:10px"><button class="btn btn-blue" onclick="ltDoTrim()">▶ Очистити</button></div>
+    </div>
+    <div class="seo-section"><h1 class="seo-h1">Інструменти для роботи зі списками онлайн</h1><p class="seo-intro">Набір безкоштовних онлайн інструментів для перетворення, сортування та очищення списків. Обробляйте дані без встановлення програм — просто вставте список і отримайте результат миттєво.</p><div class="seo-types"><h2 class="seo-h2">Доступні інструменти</h2><div class="seo-types-grid"><div class="seo-type-card"><div class="seo-type-name">Стовпчик → Рядок</div><div class="seo-type-desc">Об'єднує елементи списку (кожен з нового рядка) в один рядок з будь-яким роздільником: кома, крапка з комою, пробіл тощо.</div><div class="seo-type-example">яблуко
+груша
+слива → яблуко, груша, слива</div></div><div class="seo-type-card"><div class="seo-type-name">Рядок → Стовпчик</div><div class="seo-type-desc">Розбиває рядок на окремі елементи — кожен з нового рядка. Зворотня операція до «Стовпчик → Рядок».</div><div class="seo-type-example">яблуко, груша, слива → яблуко
+груша
+слива</div></div><div class="seo-type-card"><div class="seo-type-name">Сортування</div><div class="seo-type-desc">Сортує рядки списку за алфавітом (від А до Я або навпаки), за довжиною (від коротких до довгих) або у випадковому порядку.</div><div class="seo-type-example">банан, яблуко, груша → груша, банан, яблуко (за довжиною)</div></div><div class="seo-type-card"><div class="seo-type-name">Дублікати</div><div class="seo-type-desc">Знаходить і видаляє повторювані рядки, або показує лише дублікати, або підраховує скільки разів зустрічається кожен елемент.</div><div class="seo-type-example">яблуко, груша, яблуко → яблуко, груша (без дублів)</div></div><div class="seo-type-card"><div class="seo-type-name">Очищення</div><div class="seo-type-desc">Прибирає зайві пробіли, порожні рядки, нумерацію (1. 2. 3.) та маркери (- • *) з початку рядків.</div><div class="seo-type-example">  1. яблуко  
+• груша → яблуко
+груша</div></div></div></div><div class="seo-usecases"><h2 class="seo-h2">Коли використовувати</h2><ul class="seo-steps"><li>Підготовка даних для Excel або Google Sheets — зібрати список у рядок через кому</li><li>Очищення списків з PDF або Word — прибрати нумерацію і зайві пробіли</li><li>Робота з базами даних — конвертувати стовпчик значень у рядок для SQL IN (...)</li><li>Аналіз даних — знайти та видалити дублікати зі списку</li><li>Підготовка тегів або ключових слів — зібрати їх у рядок через кому</li><li>Перемішати або відсортувати список за алфавітом для презентації</li></ul></div><div class="seo-how"><h2 class="seo-h2">Як користуватись</h2><ol class="seo-steps"><li>Оберіть потрібний інструмент у вкладках зверху</li><li>Вставте список у ліве поле вводу або натисніть «Демо»</li><li>Налаштуйте параметри (роздільник, регістр, фільтри)</li><li>Результат з'явиться в правому полі миттєво</li><li>Натисніть «⎘» щоб скопіювати результат</li></ol></div><div class="seo-faq"><h2 class="seo-h2">Часті запитання</h2><div class="seo-faq-item"><div class="seo-faq-q">Як об'єднати список у рядок через кому?</div><div class="seo-faq-a">Перейдіть у вкладку «Стовпчик → Рядок», вставте список (кожен елемент з нового рядка), у полі «Роздільник» вкажіть «,» і скопіюйте результат.</div></div><div class="seo-faq-item"><div class="seo-faq-q">Як розбити текст через кому на окремі рядки?</div><div class="seo-faq-a">Вкладка «Рядок → Стовпчик» — вставте рядок, вкажіть роздільник «,» і отримаєте кожен елемент з нового рядка.</div></div><div class="seo-faq-item"><div class="seo-faq-q">Як видалити порожні рядки?</div><div class="seo-faq-a">Вкладка «Очищення» → увімкніть «Видалити порожні рядки» і натисніть «Очистити».</div></div><div class="seo-faq-item"><div class="seo-faq-q">Як видалити дублікати зі списку?</div><div class="seo-faq-a">Вкладка «Дублікати» → режим «Видалити дублікати» → натисніть «Обробити». Можна також увімкнути «Ігнорувати регістр» щоб «яблуко» і «Яблуко» вважались однаковими.</div></div><div class="seo-faq-item"><div class="seo-faq-q">Як відсортувати список за алфавітом?</div><div class="seo-faq-a">Вкладка «Сортування» → оберіть «А → Я» і натисніть «Сортувати». Підтримується сортування кирилиці.</div></div><div class="seo-faq-item"><div class="seo-faq-q">Чи зберігаються мої дані?</div><div class="seo-faq-a">Ні. Весь аналіз і перетворення відбуваються виключно у вашому браузері. Текст не передається на жодний сервер.</div></div></div></div>
+    <footer>
+      <span>© kyrlat.com</span>
+      <span style="opacity:.4">·</span>
+      <a href="mailto:info@kyrlat.com" class="footer-email">info@kyrlat.com</a>
+    </footer>
+  </main>
+</div>
+<script>
+
+let isDark = localStorage.getItem('theme') !== 'light';
+function applyTheme() {
+  document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+}
+function toggleTheme() {
+  isDark = !isDark;
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  applyTheme();
+}
+applyTheme();
+let flashT;
+function flash(msg, color) {
+  const el = document.getElementById('flash');
+  if (!el) return;
+  el.textContent = msg; el.style.color = color || 'var(--text)';
+  el.classList.add('show'); clearTimeout(flashT);
+  flashT = setTimeout(() => el.classList.remove('show'), 2400);
+}
+function copyText(text, msg) {
+  navigator.clipboard.writeText(text)
+    .then(() => flash(msg || 'Скопійовано!', 'var(--accent-grn)'))
+    .catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      flash(msg || 'Скопійовано!', 'var(--accent-grn)');
+    });
+}
+
+const LT_DEMOS={c2r:'яблуко\nгруша\nслива\nвишня',r2c:'яблуко, груша, слива, вишня',sort:'банан\nяблуко\nГруша\nслива',dedup:'яблуко\nгруша\nяблуко\nслива\nгруша',trim:'  яблуко  \n\nгруша\n1. слива\n- вишня'};
+function ltSetTab(id){document.querySelectorAll('.lt-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.lt-panel').forEach(p=>p.classList.remove('active'));document.getElementById('lt-tab-'+id).classList.add('active');document.getElementById('lt-'+id).classList.add('active');}
+function ltDemo(t){const m={c2r:'c2rIn',r2c:'r2cIn',sort:'sortIn',dedup:'dedupIn',trim:'trimIn'};document.getElementById(m[t]).value=LT_DEMOS[t];if(t==='c2r')ltConvert('c2r');if(t==='r2c')ltConvert('r2c');}
+function ltLines(id,trim,skip){let l=document.getElementById(id).value.split('\n');if(trim)l=l.map(x=>x.trim());if(skip)l=l.filter(x=>x.length>0);return l;}
+function ltOut(id,text){const el=document.getElementById(id);if(!text&&text!==0)el.innerHTML='<span style="color:var(--text-muted);font-style:italic">Результат…</span>';else el.textContent=text;}
+function ltStat(id,n,extra){const el=document.getElementById(id);if(el)el.textContent=n>0?n+' рядків'+(extra?' · '+extra:''):'';}
+function ltClear(inId,outId,stId){document.getElementById(inId).value='';ltOut(outId,'');const s=document.getElementById(stId);if(s)s.textContent='';}
+function ltCopy(id){const el=document.getElementById(id),t=el.textContent||el.innerText;if(t&&!t.includes('Результат'))copyText(t,'Скопійовано!');}
+function ltConvert(type){
+  if(type==='c2r'){const trim=document.getElementById('c2rTrim').checked,skip=document.getElementById('c2rSkip').checked,lower=document.getElementById('c2rLower').checked,sep=document.getElementById('c2rSep').value;let l=ltLines('c2rIn',trim,skip);if(!l.length){ltOut('c2rOut','');ltStat('c2rStat',0);return;}if(lower)l=l.map(x=>x.toLowerCase());ltOut('c2rOut',l.join(sep));ltStat('c2rStat',l.length,l.join(sep).length+' симв.');}
+  if(type==='r2c'){const trim=document.getElementById('r2cTrim').checked,skip=document.getElementById('r2cSkip').checked,sep=document.getElementById('r2cSep').value||'\n';const inp=document.getElementById('r2cIn').value;if(!inp.trim()){ltOut('r2cOut','');ltStat('r2cStat',0);return;}let p=inp.split(sep);if(trim)p=p.map(x=>x.trim());if(skip)p=p.filter(x=>x.length>0);ltOut('r2cOut',p.join('\n'));ltStat('r2cStat',p.length);}
+}
+function ltDoSort(){const skip=document.getElementById('sortSkip').checked,trim=document.getElementById('sortTrim').checked;let l=ltLines('sortIn',trim,skip);if(!l.length){ltOut('sortOut','');return;}const type=document.querySelector('input[name="sortType"]:checked').value;switch(type){case 'az':l.sort((a,b)=>a.localeCompare(b,'uk'));break;case 'za':l.sort((a,b)=>b.localeCompare(a,'uk'));break;case 'short':l.sort((a,b)=>a.length-b.length);break;case 'long':l.sort((a,b)=>b.length-a.length);break;case 'rand':l.sort(()=>Math.random()-0.5);break;}ltOut('sortOut',l.join('\n'));ltStat('sortStat',l.length);}
+function ltDoDedup(){const ic=document.getElementById('dedupCase').checked,trim=document.getElementById('dedupTrim').checked;let l=ltLines('dedupIn',trim,false);if(!l.length){ltOut('dedupOut','');return;}const mode=document.querySelector('input[name="dedupMode"]:checked').value,key=x=>ic?x.toLowerCase():x;if(mode==='remove'){const seen=new Set();const r=l.filter(x=>{const k=key(x);if(seen.has(k))return false;seen.add(k);return true;});ltOut('dedupOut',r.join('\n'));ltStat('dedupStat',r.length,'видалено '+(l.length-r.length));}else if(mode==='only'){const c={};l.forEach(x=>{const k=key(x);c[k]=(c[k]||0)+1;});const seen=new Set();const r=l.filter(x=>{const k=key(x);if(c[k]>1&&!seen.has(k)){seen.add(k);return true;}return false;});ltOut('dedupOut',r.join('\n'));ltStat('dedupStat',r.length);}else{const c={},ord=[];l.forEach(x=>{const k=key(x);if(!c[k]){c[k]={o:x,n:0};ord.push(k);}c[k].n++;});ltOut('dedupOut',ord.map(k=>c[k].n+'\t'+c[k].o).join('\n'));ltStat('dedupStat',ord.length);}}
+function ltDoTrim(){const s1=document.getElementById('trimSpaces').checked,s2=document.getElementById('trimDouble').checked,s3=document.getElementById('trimEmpty').checked,s4=document.getElementById('trimDblEmpty').checked,s5=document.getElementById('trimNums').checked,s6=document.getElementById('trimBullets').checked;const inp=document.getElementById('trimIn').value;if(!inp){ltOut('trimOut','');return;}let l=inp.split('\n');l=l.map(x=>{if(s1)x=x.trim();if(s2)x=x.replace(/  +/g,' ');if(s5)x=x.replace(/^\s*\d+[.):\-]\s*/,'');if(s6)x=x.replace(/^\s*[-•*—]\s*/,'');return x;});if(s3)l=l.filter(x=>x.length>0);if(s4){const r=[];let pe=false;for(const x of l){if(x===''){if(!pe)r.push(x);pe=true;}else{r.push(x);pe=false;}}l=r;}ltOut('trimOut',l.join('\n'));ltStat('trimStat',l.length);}
+</script>
+<div class="mobile-nav">
+  <a class="mob-nav-item" href="index.html"><span class="mob-icon">🔤</span>КИР↔LAT</a>
+  <a class="mob-nav-item" href="case.html"><span class="mob-icon">Аа</span>Регістр</a>
+  <a class="mob-nav-item active" href="lists.html"><span class="mob-icon">📋</span>Списки</a>
+</div>
+</body>
+</html>

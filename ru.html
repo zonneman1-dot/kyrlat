@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Поиск латиницы в кириллице онлайн — КИР ↔ LAT</title>
+<meta name="description" content="Бесплатный инструмент для поиска и исправления латинских символов в кириллическом тексте и наоборот. Находит невидимые ошибки, мешающие поиску и работе с документами.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="kyrlat.com">
+  <meta name="keywords" content="поиск латиницы в кириллице онлайн, латинские буквы в тексте, кириллица в латинице, проверка текста онлайн, найти латинскую букву в тексте">
+  <link rel="canonical" href="https://kyrlat.com/ru.html">
+  <!-- hreflang -->
+  <link rel="alternate" hreflang="uk" href="https://kyrlat.com/">
+  <link rel="alternate" hreflang="en" href="https://kyrlat.com/en.html">
+  <link rel="alternate" hreflang="be" href="https://kyrlat.com/be.html">
+  <link rel="alternate" hreflang="bg" href="https://kyrlat.com/bg.html">
+  <link rel="alternate" hreflang="ru" href="https://kyrlat.com/ru.html">
+  <link rel="alternate" hreflang="sr" href="https://kyrlat.com/sr.html">
+  <link rel="alternate" hreflang="x-default" href="https://kyrlat.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kyrlat.com/ru.html">
+  <meta property="og:title" content="Поиск латиницы в кириллице онлайн — КИР ↔ LAT">
+  <meta property="og:description" content="Бесплатный инструмент для поиска и исправления латинских символов в кириллическом тексте и наоборот. Находит невидимые ошибки, мешающие поиску и работе с документами.">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Поиск латиницы в кириллице онлайн — КИР ↔ LAT">
+  <meta name="twitter:description" content="Бесплатный инструмент для поиска и исправления латинских символов в кириллическом тексте и наоборот. Находит невидимые ошибки, мешающие поиску и работе с документами.">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R9XKLV5GBS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-R9XKLV5GBS");
+  </script>
+<style>
+:root {
+  --bg:#0d0d0f; --bg2:#141418; --surface:#1c1c22; --border:#2a2a35;
+  --accent-red:#ff4d6d; --accent-grn:#4dffb4; --accent-blue:#7b8cff;
+  --text:#e8e8f0; --text-muted:#6b6b80;
+  --hl-lat:rgba(255,77,109,0.32); --hl-lat-b:rgba(255,77,109,0.7);
+  --hl-cyr:rgba(77,255,180,0.28); --hl-cyr-b:rgba(77,255,180,0.6);
+  --sidebar-w:220px;
+}
+[data-theme="light"] {
+  --bg:#f4f4f8; --bg2:#fff; --surface:#eaeaf0; --border:#d0d0dc;
+  --text:#1a1a2e; --text-muted:#7070a0;
+  --accent-red:#e0203c; --accent-grn:#00aa78;
+  --hl-lat:rgba(224,32,60,0.18); --hl-lat-b:rgba(224,32,60,0.6);
+  --hl-cyr:rgba(0,170,120,0.18); --hl-cyr-b:rgba(0,170,120,0.6);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;min-height:100vh;}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;padding:0 20px;height:52px;
+}
+.topbar-logo{font-family:'Unbounded',sans-serif;font-weight:900;font-size:18px;letter-spacing:-0.5px;cursor:pointer;}
+.topbar-logo .red{color:var(--accent-red);}
+.topbar-logo .dim{color:var(--text-muted);font-weight:400;}
+.topbar-logo .grn{color:var(--accent-grn);}
+.topbar-spacer{flex:1;}
+.theme-toggle{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--surface);border:1px solid var(--border);
+  cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;
+}
+.theme-toggle:hover{border-color:var(--accent-grn);}
+
+/* ── LAYOUT ── */
+.layout{display:flex;padding-top:52px;min-height:100vh;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;top:52px;left:0;bottom:0;
+  width:var(--sidebar-w);
+  background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow-y:auto;z-index:50;
+}
+.sidebar-section-title{
+  font-size:9px;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--text-muted);padding:16px 16px 6px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 16px;cursor:pointer;
+  font-size:13px;font-weight:700;color:var(--text-muted);
+  border-left:3px solid transparent;
+  transition:all 0.15s;text-decoration:none;
+}
+.nav-item:hover{color:var(--text);background:var(--surface);}
+.nav-item.active{
+  color:var(--accent-grn);
+  border-left-color:var(--accent-grn);
+  background:color-mix(in srgb,var(--accent-grn) 8%,transparent);
+}
+.nav-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.nav-divider{height:1px;background:var(--border);margin:8px 16px;}
+
+/* lang bar in sidebar */
+.sidebar-langs{
+  padding:12px 16px;display:flex;flex-wrap:wrap;gap:4px;
+  border-top:1px solid var(--border);margin-top:auto;
+}
+.lang-btn{
+  padding:3px 9px;border-radius:20px;font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:700;cursor:pointer;
+  border:1px solid var(--border);background:var(--surface);color:var(--text-muted);transition:all 0.15s;
+  text-decoration:none;
+}
+.lang-btn:hover{color:var(--text);}
+.lang-btn.active{
+  background:color-mix(in srgb,var(--accent-grn) 12%,transparent);
+  border-color:var(--accent-grn);color:var(--accent-grn);
+}
+
+/* ── MAIN CONTENT ── */
+.main{
+  margin-left:var(--sidebar-w);flex:1;
+  padding:32px 28px 100px;max-width:860px;
+}
+.tool-page{display:none;}
+.tool-page.active{display:block;animation:fadeUp 0.2s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.tool-header{margin-bottom:24px;}
+.tool-title{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(18px,3vw,28px);letter-spacing:-0.5px;line-height:1.2;}
+.tool-title .hl-red{color:var(--accent-red);}
+.tool-title .hl-grn{color:var(--accent-grn);}
+.tool-title .hl-blue{color:var(--accent-blue);}
+.tool-sub{margin-top:6px;color:var(--text-muted);font-size:12px;}
+
+/* ── COMMON CONTROLS ── */
+.block-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;}
+.input-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center;}
+.btn{
+  padding:7px 14px;border-radius:6px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  cursor:pointer;border:1px solid transparent;transition:all 0.15s;white-space:nowrap;
+}
+.btn-red{background:rgba(255,77,109,0.14);border-color:rgba(255,77,109,0.4);color:var(--accent-red);}
+.btn-red:hover{background:rgba(255,77,109,0.26);}
+.btn-grn{background:rgba(77,255,180,0.1);border-color:rgba(77,255,180,0.35);color:var(--accent-grn);}
+.btn-grn:hover{background:rgba(77,255,180,0.2);}
+.btn-blue{background:rgba(123,140,255,0.12);border-color:rgba(123,140,255,0.4);color:var(--accent-blue);}
+.btn-blue:hover{background:rgba(123,140,255,0.22);}
+.btn-ghost{background:var(--surface);border-color:var(--border);color:var(--text-muted);}
+.btn-ghost:hover{color:var(--text);border-color:#666;}
+.btn-primary{background:var(--accent-grn);border-color:var(--accent-grn);color:#0d0d0f;font-weight:700;}
+.btn-primary:hover{filter:brightness(1.1);}
+.btn-sm{padding:4px 10px;font-size:11px;}
+.sep{width:1px;height:24px;background:var(--border);flex-shrink:0;}
+
+textarea.main-ta{
+  width:100%;min-height:160px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:'JetBrains Mono',monospace;
+  font-size:14px;line-height:1.75;padding:14px;resize:vertical;outline:none;
+  transition:border-color 0.15s;
+}
+textarea.main-ta:focus{border-color:var(--accent-grn);}
+textarea.main-ta::placeholder{color:var(--text-muted);}
+
+.result-box{
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:14px;font-size:14px;line-height:1.75;min-height:60px;
+  white-space:pre-wrap;word-break:break-all;
+  font-family:'JetBrains Mono',monospace;
+}
+.result-box.empty{color:var(--text-muted);font-style:italic;}
+
+/* ── STATS ── */
+.stats-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;min-height:28px;align-items:center;}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid transparent;}
+.chip-red{background:rgba(255,77,109,0.12);border-color:rgba(255,77,109,0.3);color:var(--accent-red);}
+.chip-grn{background:rgba(77,255,180,0.1);border-color:rgba(77,255,180,0.25);color:var(--accent-grn);}
+.chip-ok{background:rgba(77,255,180,0.08);border-color:rgba(77,255,180,0.2);color:var(--accent-grn);}
+.chip-dim{background:var(--surface);border-color:var(--border);color:var(--text-muted);}
+.chip-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+.blink{animation:blink 1.8s infinite;}
+
+/* ── KYR-LAT highlights ── */
+.hl-span{border-radius:2px;padding:0 1px;cursor:default;position:relative;font-weight:700;transition:filter 0.1s;}
+.hl-span:hover{filter:brightness(1.2);}
+.hl-lat{background:var(--hl-lat);outline:1px solid var(--hl-lat-b);color:var(--accent-red);}
+.hl-cyr{background:var(--hl-cyr);outline:1px solid var(--hl-cyr-b);color:var(--accent-grn);}
+.hl-span[data-tip]:hover::after{
+  content:attr(data-tip);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);
+  background:var(--bg2);border:1px solid var(--border);color:var(--text);
+  font-size:11px;padding:4px 8px;border-radius:4px;white-space:nowrap;pointer-events:none;z-index:10;
+}
+.fr-panel{
+  display:none;background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;padding:12px 16px;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;
+}
+.fr-panel.open{display:flex;}
+.fr-input{
+  flex:1;min-width:120px;background:var(--bg);border:1px solid var(--border);
+  border-radius:4px;padding:6px 10px;color:var(--text);
+  font-family:'JetBrains Mono',monospace;font-size:13px;outline:none;
+}
+.fr-input:focus{border-color:var(--accent-grn);}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--text-muted);}
+.legend-item{display:flex;align-items:center;gap:7px;}
+.swatch{width:16px;height:12px;border-radius:3px;display:inline-block;}
+.sw-lat{background:var(--hl-lat);outline:1px solid var(--hl-lat-b);}
+.sw-cyr{background:var(--hl-cyr);outline:1px solid var(--hl-cyr-b);}
+
+/* ── CASE TOOL ── */
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:16px;}
+.case-btn{
+  padding:10px 8px;border-radius:8px;font-size:12px;font-weight:700;
+  cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--text-muted);
+  transition:all 0.15s;text-align:center;
+}
+.case-btn:hover{border-color:var(--accent-blue);color:var(--accent-blue);background:rgba(123,140,255,0.08);}
+.case-btn.active{border-color:var(--accent-blue);color:var(--accent-blue);background:rgba(123,140,255,0.12);}
+.case-example{font-size:10px;color:var(--text-muted);margin-top:3px;font-weight:400;}
+
+/* ── LIST TOOLS ── */
+.lt-tabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:0;}
+.lt-tab{
+  padding:7px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  cursor:pointer;border:1px solid transparent;border-bottom:none;
+  border-radius:6px 6px 0 0;background:var(--surface);color:var(--text-muted);
+  transition:all 0.15s;margin-bottom:-1px;
+}
+.lt-tab:hover{color:var(--text);}
+.lt-tab.active{background:var(--bg2);color:var(--accent-blue);border-color:var(--border);border-bottom-color:var(--bg2);}
+.lt-panel{display:none;}
+.lt-panel.active{display:block;}
+.lt-opts{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:14px;}
+.lt-check{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-muted);cursor:pointer;user-select:none;}
+.lt-check input{accent-color:var(--accent-blue);width:14px;height:14px;cursor:pointer;}
+.lt-check:hover{color:var(--text);}
+.lt-radio{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-muted);cursor:pointer;}
+.lt-radio input{accent-color:var(--accent-blue);width:14px;height:14px;cursor:pointer;}
+.lt-radio-group{display:flex;flex-direction:column;gap:6px;}
+.lt-two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.lt-col{display:flex;flex-direction:column;gap:6px;}
+.lt-ta{min-height:180px!important;}
+.lt-stat{font-size:11px;color:var(--text-muted);min-height:16px;}
+.lt-sep-input{
+  background:var(--bg);border:1px solid var(--border);border-radius:4px;
+  padding:5px 10px;color:var(--text);font-family:'JetBrains Mono',monospace;
+  font-size:13px;outline:none;width:90px;
+}
+.lt-sep-input:focus{border-color:var(--accent-blue);}
+
+/* ── FLASH ── */
+#flash{
+  display:none;position:fixed;bottom:20px;right:20px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;
+  z-index:200;pointer-events:none;
+}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#flash.show{display:block;animation:fi 0.2s ease;}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;color:var(--text-muted);font-size:11px;
+  padding:24px 0 16px;opacity:0.5;
+  display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.footer-email{color:var(--accent-grn);text-decoration:none;opacity:0.8;}
+.footer-email:hover{opacity:1;}
+
+/* ── MOBILE bottom nav ── */
+.mobile-nav{display:none;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .sidebar{display:none;}
+  .main{margin-left:0;padding:16px 14px 90px;}
+  .mobile-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:100;
+    background:var(--bg2);border-top:1px solid var(--border);
+    justify-content:space-around;align-items:center;padding:6px 0;
+  }
+  .mob-nav-item{
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    font-size:9px;font-weight:700;color:var(--text-muted);cursor:pointer;
+    padding:4px 8px;border-radius:8px;transition:all 0.15s;text-align:center;
+    border:none;background:transparent;font-family:'JetBrains Mono',monospace;
+  }
+  .mob-nav-item .mob-icon{font-size:20px;}
+  .mob-nav-item.active{color:var(--accent-grn);}
+  .lang-btn{font-size:9px;padding:2px 7px;}
+  .lt-two-col{grid-template-columns:1fr;}
+  .topbar-logo{font-size:15px;}
+}
+@media(max-width:400px){
+  .btn{padding:6px 9px;font-size:11px;}
+  .btn-row .sep{display:none;}
+}
+
+/* ── SEO ── */
+.seo-section{margin-top:48px;padding-top:36px;border-top:1px solid var(--border);}
+.seo-h1{font-size:clamp(16px,3vw,24px);font-weight:900;letter-spacing:-0.5px;margin-bottom:10px;line-height:1.2;}
+.seo-h2{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text);}
+.seo-intro{font-size:13px;line-height:1.7;color:var(--text-muted);margin-bottom:20px;max-width:680px;}
+.seo-how{margin-bottom:20px;}
+.seo-steps{padding-left:20px;display:flex;flex-direction:column;gap:5px;}
+.seo-steps li{font-size:13px;line-height:1.6;color:var(--text-muted);}
+.seo-faq{display:flex;flex-direction:column;gap:8px;}
+.seo-faq-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;}
+.seo-faq-q{font-size:13px;font-weight:700;margin-bottom:4px;color:var(--text);}
+.seo-faq-a{font-size:12px;line-height:1.6;color:var(--text-muted);}
+
+/* ── SEO TYPES GRID ── */
+.seo-types { margin-bottom: 24px; }
+.seo-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px; margin-top: 12px;
+}
+.seo-type-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 16px;
+  transition: border-color 0.15s;
+}
+.seo-type-card:hover { border-color: var(--accent-blue); }
+.seo-type-name {
+  font-size: 13px; font-weight: 700; color: var(--accent-blue);
+  margin-bottom: 6px; font-family: 'JetBrains Mono', monospace;
+}
+.seo-type-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px; }
+.seo-type-example {
+  font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted); background: var(--surface);
+  padding: 4px 8px; border-radius: 4px;
+}
+.seo-usecases { margin-bottom: 24px; }
+/* ── TOPBAR LANG SWITCHER ── */
+.topbar-langs { display: flex; gap: 4px; align-items: center; margin-right: 8px; }
+.topbar-lang {
+  padding: 3px 9px; border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text-muted);
+  transition: all 0.15s;
+}
+.topbar-lang:hover { color: var(--text); border-color: #666; }
+.topbar-lang.active {
+  background: color-mix(in srgb, var(--accent-grn) 12%, transparent);
+  border-color: var(--accent-grn); color: var(--accent-grn);
+}
+/* Remove sidebar lang section */
+.sidebar-langs { display: none; }
+@media(max-width:700px) {
+  .topbar-langs { gap: 2px; }
+  .topbar-lang { font-size: 9px; padding: 2px 6px; }
+}</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-logo"><span class="red">КИР</span><span class="dim"> ↔ </span><span class="grn">LAT</span></div>
+  <div class="topbar-spacer"></div>
+  <div class="topbar-langs">
+    <a class="topbar-lang" href="index.html">УКР</a>
+    <a class="topbar-lang" href="en.html">ENG</a>
+    <a class="topbar-lang" href="be.html">БЕЛ</a>
+    <a class="topbar-lang" href="bg.html">БГ</a>
+    <a class="topbar-lang active" href="ru.html">РУС</a>
+    <a class="topbar-lang" href="sr.html">СРП</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+</div>
+<div id="flash"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-section-title">Инструменты</div>
+    <a class="nav-item active" href="ru.html"><span class="nav-icon">🔤</span>КИР ↔ LAT</a>
+    <a class="nav-item" href="case-ru.html"><span class="nav-icon">Аа</span>Регистр текста</a>
+    <a class="nav-item" href="lists-ru.html"><span class="nav-icon">📋</span>Инструменты списков</a>
+  </nav>
+  <main class="main">
+    <div class="tool-page active" id="tool-kyrlat">
+
+      <div class="tool-header">
+        <div class="tool-title"><span class="hl-red">КИР</span> ↔ <span class="hl-grn">LAT</span></div>
+        <div class="tool-sub" id="kl-sub">Пошук латиниці в кирилиці та кирилиці в латиниці</div>
+      </div>
+
+      <div class="input-header">
+        <div class="block-label" id="kl-input-lbl">Введіть текст</div>
+        <button class="btn btn-ghost btn-sm" id="kl-clear-btn" onclick="klClear()">✕ Очистити</button>
+      </div>
+      <div style="margin-bottom:14px">
+        <textarea class="main-ta" id="klInput" oninput="klOnInput()" spellcheck="false"
+          placeholder="Вставте або введіть текст тут…&#10;&#10;Приклад: Привіт! Цe тeкcт мicтить латинcькі літeри."></textarea>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-red"   id="kl-find-lat"  onclick="klFindLat()">+ Знайти латиницю</button>
+        <button class="btn btn-grn"   id="kl-find-cyr"  onclick="klFindCyr()">+ Знайти кирилицю</button>
+        <div class="sep"></div>
+        <button class="btn btn-red"   id="kl-fix-lat"   onclick="klFixLat()">Виправити LAT→КИР</button>
+        <button class="btn btn-grn"   id="kl-fix-cyr"   onclick="klFixCyr()">Виправити КИР→LAT</button>
+        <div class="sep"></div>
+        <button class="btn btn-ghost" id="kl-fr-toggle" onclick="klToggleFR()">⇄ Знайти / замінити</button>
+      </div>
+
+      <div class="fr-panel" id="klFrPanel">
+        <span class="block-label" id="kl-fr-find">Знайти</span>
+        <input type="text" class="fr-input" id="klFrFind" placeholder="Пошук…">
+        <span style="color:var(--text-muted);font-size:18px">→</span>
+        <span class="block-label" id="kl-fr-repl">Замінити</span>
+        <input type="text" class="fr-input" id="klFrRepl" placeholder="Замінити на…">
+        <button class="btn btn-primary btn-sm" id="kl-fr-btn" onclick="klDoReplace()">Замінити все</button>
+      </div>
+
+      <div class="stats-strip" id="klStats"></div>
+
+      <div class="block-label" id="kl-result-lbl" style="margin-bottom:6px">Результат</div>
+      <div style="margin-bottom:14px">
+        <div class="result-box" id="klResult">
+          <span style="color:var(--text-muted);font-style:italic" id="klResultEmpty">Результат з'явиться тут…</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-primary" id="kl-copy-btn" onclick="klCopy()">⎘ Скопіювати виправлений текст</button>
+        <div class="legend">
+          <div class="legend-item"><span class="swatch sw-lat"></span><span id="kl-leg-lat">Латиниця в кирилиці</span></div>
+          <div class="legend-item"><span class="swatch sw-cyr"></span><span id="kl-leg-cyr">Кирилиця в латиниці</span></div>
+        </div>
+      </div>
+      <div id="kl-seo-section"></div>
+    
+      <div id="kl-seo-section"><div class="seo-section"><h1 class="seo-h1">Поиск латиницы в кириллическом тексте онлайн</h1><p class="seo-intro">Бесплатный онлайн инструмент для обнаружения и исправления скрытых латинских символов в кириллическом тексте. Некоторые буквы выглядят одинаково в обоих алфавитах, но компьютер считает их разными символами — это вызывает невидимые ошибки в поиске, базах данных и документах.</p><div class="seo-types"><h2 class="seo-h2">Что проверяет инструмент</h2><div class="seo-types-grid"><div class="seo-type-card"><div class="seo-type-name">Латиница в кириллице</div><div class="seo-type-desc">Находит латинские буквы в тексте который выглядит кириллическим. Наиболее распространённые: a/а, e/е, o/о, c/с, p/р, x/х.</div><div class="seo-type-example">Привет (с латинской е) → выделено красным</div></div><div class="seo-type-card"><div class="seo-type-name">Кириллица в латинице</div><div class="seo-type-desc">Находит кириллические символы в тексте который выглядит латинским.</div><div class="seo-type-example">Hello (с кириллической е) → выделено зелёным</div></div><div class="seo-type-card"><div class="seo-type-name">Автоисправление LAT→КИР</div><div class="seo-type-desc">Автоматически заменяет латинские буквы на кириллические аналоги.</div><div class="seo-type-example">Привeт → Привет (e заменена на е)</div></div><div class="seo-type-card"><div class="seo-type-name">Автоисправление КИР→LAT</div><div class="seo-type-desc">Автоматически заменяет кириллические буквы на латинские аналоги.</div><div class="seo-type-example">Привет → Privet</div></div><div class="seo-type-card"><div class="seo-type-name">Найти и заменить</div><div class="seo-type-desc">Ручной поиск и замена любого текста — аналог Ctrl+H прямо в браузере.</div><div class="seo-type-example">Заменить все вхождения слова или символа</div></div></div></div><div class="seo-usecases"><h2 class="seo-h2">Когда это полезно</h2><ul class="seo-steps"><li>Текст не находится при поиске Ctrl+F — скрытая латиница частая причина</li><li>Ошибки в базе данных — одинаковые на вид слова считаются разными</li><li>Проверка документов Word, Excel, PDF после копирования</li><li>Подготовка текстов для сайтов и CMS</li><li>Проверка email-адресов и имён</li></ul></div><div class="seo-how"><h2 class="seo-h2">Как пользоваться</h2><ol class="seo-steps"><li>Вставьте текст в поле ввода</li><li>Нажмите «+ Найти латиницу» или «+ Найти кириллицу»</li><li>Подозрительные символы выделятся цветом</li><li>Нажмите «Исправить LAT→КИР» для автоисправления</li><li>Скопируйте исправленный текст кнопкой «⎘»</li></ol></div><div class="seo-faq"><h2 class="seo-h2">Частые вопросы</h2><div class="seo-faq-item"><div class="seo-faq-q">Почему латинские буквы появляются в кириллическом тексте?</div><div class="seo-faq-a">При копировании из PDF или веб-страниц. Некоторые буквы выглядят одинаково: а/a, е/e, о/o, с/c, р/p. Человек не замечает разницы, но компьютер видит разные символы.</div></div><div class="seo-faq-item"><div class="seo-faq-q">Почему текст не находится при поиске?</div><div class="seo-faq-a">Если хотя бы одна буква в слове из другого алфавита — поиск не найдёт слово.</div></div><div class="seo-faq-item"><div class="seo-faq-q">Данные сохраняются?</div><div class="seo-faq-a">Нет. Всё происходит в браузере. Текст не передаётся на сервер.</div></div></div></div></div>
+    </div>
+    <footer>
+      <span id="kl-footer-text">© kyrlat.com</span>
+      <span style="opacity:.4">·</span>
+      <a href="mailto:info@kyrlat.com" class="footer-email">info@kyrlat.com</a>
+    </footer>
+  </main>
+</div>
+<script>
+
+// ── THEME ─────────────────────────────────────────────────────
+let isDark = localStorage.getItem('theme') !== 'light';
+function applyTheme() {
+  document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+}
+function toggleTheme() {
+  isDark = !isDark;
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  applyTheme();
+}
+applyTheme();
+
+
+// ══════════════════════════════════════════════════════════════
+// KYR-LAT TOOL
+// ══════════════════════════════════════════════════════════════
+const KL_LANGS = {
+  uk: {
+    sub:'Пошук латиниці в кирилиці та кирилиці в латиниці',
+    inputLbl:'Введіть текст', findLat:'+ Знайти латиницю', findCyr:'+ Знайти кирилицю',
+    fixLat:'Виправити LAT→КИР', fixCyr:'Виправити КИР→LAT', frToggle:'⇄ Знайти / замінити',
+    frFind:'Знайти', frRepl:'Замінити', frBtn:'Замінити все', resultLbl:'Результат',
+    resultEmpty:"Результат з'явиться тут…", copyBtn:'⎘ Скопіювати виправлений текст',
+    legLat:'Латиниця в кирилиці', legCyr:'Кирилиця в латиниці',
+    placeholder:"Вставте або введіть текст тут…\n\nПриклад: Привіт! Цe тeкcт мicтить латинcькі літeри.",
+    statLat:'LAT в кирилиці', statCyr:'КИР в тексті', statOk:'Підозрілих символів не знайдено', statChars:'символів',
+    found:'Знайдено', notFoundLat:'Латиниці не знайдено', notFoundCyr:'Кирилиці не знайдено',
+    nothingFix:'Нічого для виправлення', fixed:'Виправлено', replaced:'Замінено',
+    occurrences:'входжень', symbols:'символ(ів)', copied:'Скопійовано!', notFound:'Нічого не знайдено',
+    tipLat:'LAT→КИР', tipCyr:'КИР в тексті', clearBtn:'✕ Очистити',
+    footer:'КИР ↔ LAT // Безкоштовний інструмент перевірки тексту',
+    seo:{
+      h1:'Пошук латиниці в кирилиці онлайн',
+      intro:'Безкоштовний інструмент для виявлення та виправлення латинських символів у кирилічному тексті. Часто трапляється коли текст скопійовано з різних джерел — окремі літери виглядають однаково, але насправді є латинськими.',
+      howTitle:'Як користуватись',
+      howSteps:['Вставте або введіть текст у поле вводу','Натисніть «Знайти латиницю» — підозрілі символи підсвітяться червоним','Натисніть «Виправити LAT→КИР» для автоматичного виправлення','Скопіюйте виправлений текст'],
+      faqTitle:'Часті запитання',
+      faqs:[
+        {q:"Чому латинські букви з'являються в кирилічному тексті?",a:"Найчастіше це трапляється при копіюванні тексту з PDF або веб-сторінок. Деякі літери виглядають однаково: а/a, е/e, о/o, с/c, р/p."},
+        {q:'Чи зберігаються мої дані?',a:'Ні. Весь аналіз відбувається прямо у вашому браузері — текст не передається на жодний сервер.'},
+      ],
+    }
+  },
+  en: {
+    sub:'Find Latin in Cyrillic text and Cyrillic in Latin text',
+    inputLbl:'Enter text', findLat:'+ Find Latin', findCyr:'+ Find Cyrillic',
+    fixLat:'Fix LAT→CYR', fixCyr:'Fix CYR→LAT', frToggle:'⇄ Find / Replace',
+    frFind:'Find', frRepl:'Replace', frBtn:'Replace all', resultLbl:'Result',
+    resultEmpty:'Result will appear here…', copyBtn:'⎘ Copy corrected text',
+    legLat:'Latin in Cyrillic', legCyr:'Cyrillic in text',
+    placeholder:"Paste or type text here…\n\nExample: Hеllo! Тhis tехt соntаins Сyrilliс сhаrs.",
+    statLat:'LAT in Cyrillic', statCyr:'CYR in text', statOk:'No suspicious characters', statChars:'chars',
+    found:'Found', notFoundLat:'No Latin found', notFoundCyr:'No Cyrillic found',
+    nothingFix:'Nothing to fix', fixed:'Fixed', replaced:'Replaced',
+    occurrences:'occurrences', symbols:'symbol(s)', copied:'Copied!', notFound:'Nothing found',
+    tipLat:'LAT→CYR', tipCyr:'Cyrillic in text', clearBtn:'✕ Clear',
+    footer:'CYR ↔ LAT // Free text checker tool',
+    seo:{
+      h1:'Find Latin Letters in Cyrillic Text Online',
+      intro:'A free tool to detect and fix Latin symbols hidden inside Cyrillic text. Certain letters look identical in both alphabets but are treated as different characters by computers.',
+      howTitle:'How to use',
+      howSteps:['Paste or type text into the input field','Click "Find Latin" — suspicious characters will be highlighted red','Click "Fix LAT→CYR" to auto-replace','Copy the corrected text'],
+      faqTitle:'FAQ',
+      faqs:[
+        {q:'Why do Latin letters appear in Cyrillic text?',a:'Usually when copying from PDFs or websites. Some letters look identical: a/а, e/е, o/о, c/с, p/р.'},
+        {q:'Is my text sent to a server?',a:'No. All processing happens in your browser.'},
+      ],
+    }
+  },
+  be: {
+    sub:'Пошук лацінкі ў кірыліцы і кірыліцы ў лацінцы',
+    inputLbl:'Увядзіце тэкст', findLat:'+ Знайсці лацінку', findCyr:'+ Знайсці кірыліцу',
+    fixLat:'Выправіць LAT→КІР', fixCyr:'Выправіць КІР→LAT', frToggle:'⇄ Знайсці / замяніць',
+    frFind:'Знайсці', frRepl:'Замяніць', frBtn:'Замяніць усё', resultLbl:'Вынік',
+    resultEmpty:"Вынік з'явіцца тут…", copyBtn:'⎘ Скапіраваць выпраўлены тэкст',
+    legLat:'Лацінка ў кірыліцы', legCyr:'Кірыліца ў тэксце',
+    placeholder:'Устаўце або ўвядзіце тэкст тут…',
+    statLat:'LAT у кірыліцы', statCyr:'КІР у тэксце', statOk:'Падазроных сімвалаў не знойдзена', statChars:'сімвалаў',
+    found:'Знойдзена', notFoundLat:'Лацінкі не знойдзена', notFoundCyr:'Кірыліцы не знойдзена',
+    nothingFix:'Няма чаго выпраўляць', fixed:'Выпраўлена', replaced:'Заменена',
+    occurrences:'уваходжанняў', symbols:'сімвал(аў)', copied:'Скапіравана!', notFound:'Нічога не знойдзена',
+    tipLat:'LAT→КІР', tipCyr:'Кірыліца ў тэксце', clearBtn:'✕ Ачысціць',
+    footer:'КІР ↔ LAT // Бясплатны інструмент праверкі тэксту',
+    seo:{h1:'Пошук лацінкі ў кірылічным тэксце анлайн',intro:'Бясплатны інструмент для выяўлення і выпраўлення лацінскіх сімвалаў у кірылічным тэксце.',howTitle:'Як карыстацца',howSteps:['Устаўце тэкст','Націсніце «Знайсці лацінку»','Выправіць і скапіраваць'],faqTitle:'Пытанні',faqs:[{q:'Чаму лацінкі ў кірыліцы?',a:'Пры капіраванні з PDF або сайтаў.'},{q:'Ці захоўваюцца даныя?',a:'Не. Аналіз у браўзеры.'}]}
+  },
+  bg: {
+    sub:'Търсене на латиница в кирилица и обратно',
+    inputLbl:'Въведете текст', findLat:'+ Намери латиница', findCyr:'+ Намери кирилица',
+    fixLat:'Поправи LAT→КИР', fixCyr:'Поправи КИР→LAT', frToggle:'⇄ Намери / замени',
+    frFind:'Намери', frRepl:'Замени', frBtn:'Замени всичко', resultLbl:'Резултат',
+    resultEmpty:'Резултатът ще се появи тук…', copyBtn:'⎘ Копирай поправения текст',
+    legLat:'Латиница в кирилица', legCyr:'Кирилица в текста',
+    placeholder:'Поставете или въведете текст тук…',
+    statLat:'LAT в кирилица', statCyr:'КИР в текста', statOk:'Няма подозрителни символи', statChars:'символа',
+    found:'Намерено', notFoundLat:'Латиница не е намерена', notFoundCyr:'Кирилица не е намерена',
+    nothingFix:'Няма какво да се поправи', fixed:'Поправено', replaced:'Заменено',
+    occurrences:'срещания', symbols:'символ(а)', copied:'Копирано!', notFound:'Нищо не е намерено',
+    tipLat:'LAT→КИР', tipCyr:'Кирилица в текста', clearBtn:'✕ Изчисти',
+    footer:'КИР ↔ LAT // Безплатен инструмент за проверка на текст',
+    seo:{h1:'Търсене на латиница в кирилски текст онлайн',intro:'Безплатен инструмент за намиране на латински символи в кирилски текст.',howTitle:'Как се използва',howSteps:['Поставете текст','Натиснете «Намери латиница»','Поправете и копирайте'],faqTitle:'Въпроси',faqs:[{q:'Защо латиница в кирилица?',a:'При копиране от PDF или уебсайтове.'},{q:'Данните се съхраняват ли?',a:'Не. Анализът е в браузъра.'}]}
+  },
+  ru: {
+    sub:'Поиск латиницы в кириллице и кириллицы в латинице',
+    inputLbl:'Введите текст', findLat:'+ Найти латиницу', findCyr:'+ Найти кириллицу',
+    fixLat:'Исправить LAT→КИР', fixCyr:'Исправить КИР→LAT', frToggle:'⇄ Найти / заменить',
+    frFind:'Найти', frRepl:'Заменить', frBtn:'Заменить всё', resultLbl:'Результат',
+    resultEmpty:'Результат появится здесь…', copyBtn:'⎘ Скопировать исправленный текст',
+    legLat:'Латиница в кириллице', legCyr:'Кириллица в тексте',
+    placeholder:'Вставьте или введите текст здесь…\n\nПример: Привет! Этo тeкcт coдержит латинcкие буквы.',
+    statLat:'LAT в кириллице', statCyr:'КИР в тексте', statOk:'Подозрительных символов нет', statChars:'символов',
+    found:'Найдено', notFoundLat:'Латиница не найдена', notFoundCyr:'Кириллица не найдена',
+    nothingFix:'Нечего исправлять', fixed:'Исправлено', replaced:'Заменено',
+    occurrences:'вхождений', symbols:'символ(ов)', copied:'Скопировано!', notFound:'Ничего не найдено',
+    tipLat:'LAT→КИР', tipCyr:'Кириллица в тексте', clearBtn:'✕ Очистить',
+    footer:'КИР ↔ LAT // Бесплатный инструмент проверки текста',
+    seo:{h1:'Поиск латиницы в кириллическом тексте онлайн',intro:'Бесплатный инструмент для обнаружения и исправления латинских символов в кириллическом тексте.',howTitle:'Как пользоваться',howSteps:['Вставьте текст','Нажмите «Найти латиницу»','Исправьте и скопируйте'],faqTitle:'Вопросы',faqs:[{q:'Почему латиница в кириллице?',a:'При копировании из PDF или веб-страниц.'},{q:'Данные сохраняются?',a:'Нет. Анализ в браузере.'}]}
+  },
+  sr: {
+    sub:'Претрага латинице у ћирилици и ћирилице у латиници',
+    inputLbl:'Унесите текст', findLat:'+ Пронађи латиницу', findCyr:'+ Пронађи ћирилицу',
+    fixLat:'Исправи LAT→ЋИР', fixCyr:'Исправи ЋИР→LAT', frToggle:'⇄ Нађи / замени',
+    frFind:'Нађи', frRepl:'Замени', frBtn:'Замени све', resultLbl:'Резултат',
+    resultEmpty:'Резултат ће се појавити овде…', copyBtn:'⎘ Копирај исправљени текст',
+    legLat:'Латиница у ћирилици', legCyr:'Ћирилица у латиници',
+    placeholder:'Налепите или унесите текст овде…\n\nПример: Здраво! Оваj текcт cадржи латинична cлова.',
+    statLat:'LAT у ћирилици', statCyr:'ЋИР у тексту', statOk:'Нема сумњивих знакова', statChars:'знакова',
+    found:'Пронађено', notFoundLat:'Латиница није пронађена', notFoundCyr:'Ћирилица није пронађена',
+    nothingFix:'Нема шта да се исправи', fixed:'Исправљено', replaced:'Замењено',
+    occurrences:'појављивања', symbols:'знак(ова)', copied:'Копирано!', notFound:'Ништа није пронађено',
+    tipLat:'LAT→ЋИР', tipCyr:'Ћирилица у тексту', clearBtn:'✕ Обриши',
+    footer:'КИР ↔ LAT // Бесплатан алат за проверу текста',
+    seo:{h1:'Претрага латинице у ћириличном тексту онлајн',intro:'Бесплатан алат за откривање латиничних знакова у ћириличном тексту.',howTitle:'Како се користи',howSteps:['Налепите текст','Кликните «Пронађи латиницу»','Исправите и копирајте'],faqTitle:'Питања',faqs:[{q:'Зашто латиница у ћирилици?',a:'Приликом копирања из PDF-а или са веб страница.'},{q:'Да ли се подаци чувају?',a:'Не. Анализа је у прегледачу.'}]}
+  }
+};
+
+const LAT2CYR = {'a':'а','e':'е','o':'о','p':'р','c':'с','x':'х','y':'у','i':'і','A':'А','E':'Е','O':'О','P':'Р','C':'С','X':'Х','Y':'У','I':'І','B':'В','H':'Н','K':'К','M':'М','T':'Т'};
+const CYR2LAT = {'а':'a','е':'e','о':'o','р':'p','с':'c','х':'x','у':'y','і':'i','А':'A','Е':'E','О':'O','Р':'P','С':'C','Х':'X','У':'Y','І':'I','В':'B','Н':'H','К':'K','М':'M','Т':'T'};
+const isCyr = c => /[\u0400-\u04FF]/.test(c);
+const isLat = c => /[a-zA-Z]/.test(c);
+
+let klLang = 'uk';
+let klLastText = '';
+
+function klSetLang(l) {
+  klLang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  const lb = document.getElementById('lb-'+l);
+  if (lb) lb.classList.add('active');
+  const t = KL_LANGS[l];
+  if (!t) return;
+  const ids = {
+    'kl-sub':t.sub,'kl-input-lbl':t.inputLbl,'kl-clear-btn':t.clearBtn,
+    'kl-find-lat':t.findLat,'kl-find-cyr':t.findCyr,'kl-fix-lat':t.fixLat,'kl-fix-cyr':t.fixCyr,
+    'kl-fr-toggle':t.frToggle,'kl-fr-find':t.frFind,'kl-fr-repl':t.frRepl,'kl-fr-btn':t.frBtn,
+    'kl-result-lbl':t.resultLbl,'kl-copy-btn':t.copyBtn,'kl-leg-lat':t.legLat,'kl-leg-cyr':t.legCyr,
+  };
+  Object.entries(ids).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.textContent=val;});
+  document.getElementById('klInput').placeholder = t.placeholder;
+  const re = document.getElementById('klResultEmpty');
+  if (re) re.textContent = t.resultEmpty;
+  klRenderStats(0,0,document.getElementById('klInput').value.length);
+  if (t.seo) klRenderSeo(t.seo);
+  const ft = document.getElementById('kl-footer-text');
+  if (ft && t.footer) ft.textContent = t.footer;
+}
+
+function klRenderSeo(s) {
+  const el = document.getElementById('kl-seo-section');
+  if (!el) return;
+  const steps = s.howSteps.map(st=>`<li>${st}</li>`).join('');
+  const faqs  = s.faqs.map(f=>`<div class="seo-faq-item"><div class="seo-faq-q">${f.q}</div><div class="seo-faq-a">${f.a}</div></div>`).join('');
+  el.innerHTML = `<div class="seo-section"><h1 class="seo-h1">${s.h1}</h1><p class="seo-intro">${s.intro}</p><div class="seo-how"><h2 class="seo-h2">${s.howTitle}</h2><ol class="seo-steps">${steps}</ol></div><div class="seo-faq"><h2 class="seo-h2">${s.faqTitle}</h2>${faqs}</div></div>`;
+}
+
+function klFindLatHits(text){const h=[];for(let i=0;i<text.length;i++)if(isLat(text[i]))h.push(i);return h;}
+function klFindCyrHits(text){const h=[];for(let i=0;i<text.length;i++)if(isCyr(text[i]))h.push(i);return h;}
+
+function klRender(text,latSet,cyrSet){
+  const t=KL_LANGS[klLang], box=document.getElementById('klResult');
+  klLastText=text;
+  if(!text){box.innerHTML=`<span style="color:var(--text-muted);font-style:italic" id="klResultEmpty">${t.resultEmpty}</span>`;return;}
+  let html='';
+  for(let i=0;i<text.length;i++){
+    const ch=text[i],esc=ch.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    if(latSet.has(i)){const eq=LAT2CYR[ch];html+=`<span class="hl-span hl-lat" data-tip="${t.tipLat}: '${ch}'${eq?'→\''+eq+'\'':''}">${esc}</span>`;}
+    else if(cyrSet.has(i)){const eq=CYR2LAT[ch];const tip=eq?`${t.tipCyr}: '${ch}'→'${eq}'`:`${t.tipCyr}: '${ch}'`;html+=`<span class="hl-span hl-cyr" data-tip="${tip}">${esc}</span>`;}
+    else html+=esc;
+  }
+  box.innerHTML=html;
+}
+
+function klRenderStats(latC,cyrC,total){
+  const t=KL_LANGS[klLang],s=document.getElementById('klStats');
+  if(!total){s.innerHTML='';return;}
+  let html='';
+  if(latC)html+=`<span class="chip chip-red blink"><span class="chip-dot"></span>${t.statLat}: ${latC}</span>`;
+  if(cyrC)html+=`<span class="chip chip-grn"><span class="chip-dot"></span>${t.statCyr}: ${cyrC}</span>`;
+  if(!latC&&!cyrC)html+=`<span class="chip chip-ok"><span class="chip-dot"></span>${t.statOk}</span>`;
+  html+=`<span class="chip chip-dim">${total} ${t.statChars}</span>`;
+  s.innerHTML=html;
+}
+
+function klOnInput(){
+  document.getElementById('klStats').innerHTML='';
+  const t=KL_LANGS[klLang];
+  document.getElementById('klResult').innerHTML=`<span style="color:var(--text-muted);font-style:italic" id="klResultEmpty">${t.resultEmpty}</span>`;
+  klLastText='';
+}
+
+function klFindLat(){
+  const text=document.getElementById('klInput').value,t=KL_LANGS[klLang];
+  if(!text)return;
+  const hits=klFindLatHits(text);
+  klRenderStats(hits.length,0,text.length);
+  klRender(text,new Set(hits),new Set());
+  flash(hits.length?`${t.found}: ${hits.length} ${t.symbols}`:t.notFoundLat,hits.length?'#ff4d6d':'#6b6b80');
+}
+
+function klFindCyr(){
+  const text=document.getElementById('klInput').value,t=KL_LANGS[klLang];
+  if(!text)return;
+  const hits=klFindCyrHits(text);
+  klRenderStats(0,hits.length,text.length);
+  klRender(text,new Set(),new Set(hits));
+  flash(hits.length?`${t.found}: ${hits.length} ${t.symbols}`:t.notFoundCyr,hits.length?'#4dffb4':'#6b6b80');
+}
+
+function klFixLat(){
+  const ta=document.getElementById('klInput'),t=KL_LANGS[klLang];
+  const hits=klFindLatHits(ta.value);
+  if(!hits.length){flash(t.nothingFix,'#6b6b80');return;}
+  const fixable=hits.filter(i=>LAT2CYR[ta.value[i]]);
+  if(!fixable.length){flash(t.nothingFix,'#6b6b80');return;}
+  const arr=ta.value.split('');
+  fixable.forEach(i=>{arr[i]=LAT2CYR[arr[i]];});
+  ta.value=arr.join('');klLastText=ta.value;
+  const rem=klFindLatHits(ta.value);
+  klRender(ta.value,new Set(rem),new Set());
+  klRenderStats(rem.length,0,ta.value.length);
+  flash(`${t.fixed}: ${fixable.length} ${t.symbols}`,'#4dffb4');
+}
+
+function klFixCyr(){
+  const ta=document.getElementById('klInput'),t=KL_LANGS[klLang];
+  const hits=klFindCyrHits(ta.value);
+  if(!hits.length){flash(t.nothingFix,'#6b6b80');return;}
+  const arr=ta.value.split('');
+  hits.forEach(i=>{arr[i]=CYR2LAT[arr[i]]||arr[i];});
+  ta.value=arr.join('');klLastText=ta.value;
+  klRender(ta.value,new Set(),new Set());
+  klRenderStats(0,0,ta.value.length);
+  flash(`${t.fixed}: ${hits.length} ${t.symbols}`,'#4dffb4');
+}
+
+function klClear(){
+  document.getElementById('klInput').value='';
+  document.getElementById('klStats').innerHTML='';
+  const t=KL_LANGS[klLang];
+  document.getElementById('klResult').innerHTML=`<span style="color:var(--text-muted);font-style:italic">${t.resultEmpty}</span>`;
+  klLastText='';
+}
+
+function klToggleFR(){document.getElementById('klFrPanel').classList.toggle('open');}
+
+function klDoReplace(){
+  const ta=document.getElementById('klInput'),t=KL_LANGS[klLang];
+  const find=document.getElementById('klFrFind').value,rep=document.getElementById('klFrRepl').value;
+  if(!find||!ta.value)return;
+  const esc=find.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const count=(ta.value.match(new RegExp(esc,'g'))||[]).length;
+  if(!count){flash(t.notFound,'#6b6b80');return;}
+  ta.value=ta.value.split(find).join(rep);
+  klOnInput();
+  flash(`${t.replaced}: ${count} ${t.occurrences}`,'#4dffb4');
+}
+
+function klCopy(){
+  const t=KL_LANGS[klLang],text=klLastText||document.getElementById('klInput').value;
+  if(!text)return;
+  copyText(text,t.copied);
+}
+
+// ══════════════════════════════════════════════════════════════
+// CASE TOOL
+// ══════════════════════════════════════════════════════════════
+let caseLastResult='';
+
+function caseWords(str){return str.match(/[\u0400-\u04FFa-zA-Z'\u02BC`]+/g)||[];}
+
+function caseApply(type,event){
+  const input=document.getElementById('caseInput').value;
+  const box=document.getElementById('caseResult');
+  if(!input){box.innerHTML='<span style="color:var(--text-muted);font-style:italic">Спочатку введіть текст…</span>';return;}
+  let result='';
+  switch(type){
+    case 'upper': result=input.toUpperCase();break;
+    case 'lower': result=input.toLowerCase();break;
+    case 'title': result=input.replace(/[\u0400-\u04FFa-zA-Z'\u02BC]+/g,w=>w[0].toUpperCase()+w.slice(1).toLowerCase());break;
+    case 'sentence':
+      result=input.toLowerCase().replace(/(^|[.!?]\s+)([\u0400-\u04FFa-zA-Z])/g,(_,pre,ch)=>pre+ch.toUpperCase());break;
+    case 'toggle':
+      result=input.split('').map(c=>{const up=c.toUpperCase(),lo=c.toLowerCase();if(up===lo)return c;return c===up?lo:up;}).join('');break;
+    case 'camel':{
+      const words=caseWords(input.toLowerCase());
+      if(!words.length){result=input;break;}
+      result=words[0]+words.slice(1).map(w=>w[0].toUpperCase()+w.slice(1)).join('');break;}
+    case 'snake': result=caseWords(input.toLowerCase()).join('_');break;
+    case 'kebab': result=caseWords(input.toLowerCase()).join('-');break;
+  }
+  caseLastResult=result;
+  box.textContent=result;
+  document.querySelectorAll('.case-btn').forEach(b=>b.classList.remove('active'));
+  if(event&&event.currentTarget)event.currentTarget.classList.add('active');
+}
+
+function caseOnInput(){
+  if(caseLastResult){
+    document.getElementById('caseResult').innerHTML='<span style="color:var(--text-muted);font-style:italic">Оберіть тип регістру…</span>';
+    caseLastResult='';
+    document.querySelectorAll('.case-btn').forEach(b=>b.classList.remove('active'));
+  }
+}
+
+function caseReset(){
+  document.getElementById('caseInput').value='';
+  document.getElementById('caseResult').innerHTML='<span style="color:var(--text-muted);font-style:italic">Оберіть тип регістру…</span>';
+  caseLastResult='';
+  document.querySelectorAll('.case-btn').forEach(b=>b.classList.remove('active'));
+}
+
+function caseCopy(){if(!caseLastResult)return;copyText(caseLastResult,'Скопійовано!');}
+
+// ══════════════════════════════════════════════════════════════
+// LIST TOOLS
+// ══════════════════════════════════════════════════════════════
+const LT_DEMOS = {
+  c2r:'яблуко\nгруша\nслива\nвишня\nабрикос\nперсик',
+  r2c:'яблуко, груша, слива, вишня, абрикос, персик',
+  sort:'банан\nяблуко\nГруша\nслива\nАбрикос\nківі',
+  dedup:'яблуко\nгруша\nяблуко\nслива\nГруша\nвишня\nслива',
+  trim:'  яблуко  \n\nгруша\n\n\nслива  \n  1. вишня\n- абрикос\n• персик',
+};
+
+function ltSetTab(id){
+  document.querySelectorAll('.lt-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.lt-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('lt-tab-'+id).classList.add('active');
+  document.getElementById('lt-'+id).classList.add('active');
+}
+
+function ltDemo(type){
+  const map={c2r:'c2rIn',r2c:'r2cIn',sort:'sortIn',dedup:'dedupIn',trim:'trimIn'};
+  document.getElementById(map[type]).value=LT_DEMOS[type];
+  if(type==='c2r')ltConvert('c2r');
+  if(type==='r2c')ltConvert('r2c');
+}
+
+function ltGetLines(id,trim,skip){
+  let lines=document.getElementById(id).value.split('\n');
+  if(trim)lines=lines.map(l=>l.trim());
+  if(skip)lines=lines.filter(l=>l.length>0);
+  return lines;
+}
+
+function ltSetOut(id,text){
+  const el=document.getElementById(id);
+  if(!text&&text!==0){el.innerHTML='<span style="color:var(--text-muted);font-style:italic">Результат…</span>';}
+  else el.textContent=text;
+}
+
+function ltStat(id,n,extra){
+  const el=document.getElementById(id);
+  if(el)el.textContent=n>0?`${n} рядків${extra?' · '+extra:''}`:'' ;
+}
+
+function ltClearIO(inId,outId,statId){
+  document.getElementById(inId).value='';
+  ltSetOut(outId,'');
+  const s=document.getElementById(statId);if(s)s.textContent='';
+}
+
+function ltCopy(id){
+  const el=document.getElementById(id);
+  const text=el.textContent||el.innerText;
+  if(!text||text.includes('Результат…'))return;
+  copyText(text,'Скопійовано!');
+}
+
+function ltConvert(type){
+  if(type==='c2r'){
+    const trim=document.getElementById('c2rTrim').checked;
+    const skip=document.getElementById('c2rSkip').checked;
+    const lower=document.getElementById('c2rLower').checked;
+    let sep=document.getElementById('c2rSep').value;
+    let lines=ltGetLines('c2rIn',trim,skip);
+    if(!lines.length){ltSetOut('c2rOut','');ltStat('c2rStat',0);return;}
+    if(lower)lines=lines.map(l=>l.toLowerCase());
+    ltSetOut('c2rOut',lines.join(sep));
+    ltStat('c2rStat',lines.length,`${lines.join(sep).length} символів`);
+  }
+  if(type==='r2c'){
+    const trim=document.getElementById('r2cTrim').checked;
+    const skip=document.getElementById('r2cSkip').checked;
+    let sep=document.getElementById('r2cSep').value||'\n';
+    const input=document.getElementById('r2cIn').value;
+    if(!input.trim()){ltSetOut('r2cOut','');ltStat('r2cStat',0);return;}
+    let parts=input.split(sep);
+    if(trim)parts=parts.map(p=>p.trim());
+    if(skip)parts=parts.filter(p=>p.length>0);
+    ltSetOut('r2cOut',parts.join('\n'));
+    ltStat('r2cStat',parts.length);
+  }
+}
+
+function ltDoSort(){
+  const skip=document.getElementById('sortSkip').checked;
+  const trim=document.getElementById('sortTrim').checked;
+  let lines=ltGetLines('sortIn',trim,skip);
+  if(!lines.length){ltSetOut('sortOut','');return;}
+  const type=document.querySelector('input[name="sortType"]:checked').value;
+  switch(type){
+    case 'az':   lines.sort((a,b)=>a.localeCompare(b,'uk'));break;
+    case 'za':   lines.sort((a,b)=>b.localeCompare(a,'uk'));break;
+    case 'short':lines.sort((a,b)=>a.length-b.length);break;
+    case 'long': lines.sort((a,b)=>b.length-a.length);break;
+    case 'rand': lines.sort(()=>Math.random()-0.5);break;
+  }
+  ltSetOut('sortOut',lines.join('\n'));
+  ltStat('sortStat',lines.length);
+}
+
+function ltDoDedup(){
+  const ignCase=document.getElementById('dedupCase').checked;
+  const trim=document.getElementById('dedupTrim').checked;
+  let lines=ltGetLines('dedupIn',trim,false);
+  if(!lines.length){ltSetOut('dedupOut','');return;}
+  const mode=document.querySelector('input[name="dedupMode"]:checked').value;
+  const key=l=>ignCase?l.toLowerCase():l;
+  if(mode==='remove'){
+    const seen=new Set();
+    const result=lines.filter(l=>{const k=key(l);if(seen.has(k))return false;seen.add(k);return true;});
+    ltSetOut('dedupOut',result.join('\n'));
+    ltStat('dedupStat',result.length,`видалено ${lines.length-result.length} дублікатів`);
+  } else if(mode==='only'){
+    const counts={};
+    lines.forEach(l=>{const k=key(l);counts[k]=(counts[k]||0)+1;});
+    const seen=new Set();
+    const result=lines.filter(l=>{const k=key(l);if(counts[k]>1&&!seen.has(k)){seen.add(k);return true;}return false;});
+    ltSetOut('dedupOut',result.join('\n'));
+    ltStat('dedupStat',result.length,'унікальних дублікатів');
+  } else {
+    const counts={},order=[];
+    lines.forEach(l=>{const k=key(l);if(!counts[k]){counts[k]={orig:l,n:0};order.push(k);}counts[k].n++;});
+    ltSetOut('dedupOut',order.map(k=>`${counts[k].n}\t${counts[k].orig}`).join('\n'));
+    ltStat('dedupStat',order.length,'унікальних рядків');
+  }
+}
+
+function ltDoTrim(){
+  const doSp=document.getElementById('trimSpaces').checked;
+  const doDbl=document.getElementById('trimDouble').checked;
+  const doEmp=document.getElementById('trimEmpty').checked;
+  const doDblEmp=document.getElementById('trimDblEmpty').checked;
+  const doNum=document.getElementById('trimNums').checked;
+  const doBul=document.getElementById('trimBullets').checked;
+  const input=document.getElementById('trimIn').value;
+  if(!input){ltSetOut('trimOut','');return;}
+  let lines=input.split('\n');
+  lines=lines.map(l=>{
+    if(doSp)l=l.trim();
+    if(doDbl)l=l.replace(/  +/g,' ');
+    if(doNum)l=l.replace(/^\s*\d+[.):\-]\s*/,'');
+    if(doBul)l=l.replace(/^\s*[-•*—]\s*/,'');
+    return l;
+  });
+  if(doEmp)lines=lines.filter(l=>l.length>0);
+  if(doDblEmp){
+    const res=[];let prevEmpty=false;
+    for(const l of lines){if(l===''){if(!prevEmpty)res.push(l);prevEmpty=true;}else{res.push(l);prevEmpty=false;}}
+    lines=res;
+  }
+  ltSetOut('trimOut',lines.join('\n'));
+  ltStat('trimStat',lines.length);
+}
+
+// ══════════════════════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════════════════════
+let flashT;
+function flash(msg,color){
+  const el=document.getElementById('flash');
+  if(!el)return;
+  el.textContent=msg;el.style.color=color||'var(--text)';
+  el.classList.add('show');clearTimeout(flashT);
+  flashT=setTimeout(()=>el.classList.remove('show'),2400);
+}
+
+function copyText(text,msg){
+  navigator.clipboard.writeText(text)
+    .then(()=>flash(msg||'Скопійовано!','var(--accent-grn)'))
+    .catch(()=>{
+      const ta=document.createElement('textarea');
+      ta.value=text;ta.style.cssText='position:fixed;opacity:0';
+      document.body.appendChild(ta);ta.focus();ta.select();
+      document.execCommand('copy');document.body.removeChild(ta);
+      flash(msg||'Скопійовано!','var(--accent-grn)');
+    });
+}
+
+// Init
+klSetLang('ru');
+</script>
+<div class="mobile-nav">
+  <a class="mob-nav-item active" href="ru.html"><span class="mob-icon">🔤</span>КИР↔LAT</a>
+  <a class="mob-nav-item" href="case-ru.html"><span class="mob-icon">Аа</span>Регистр</a>
+  <a class="mob-nav-item" href="lists-ru.html"><span class="mob-icon">📋</span>Списки</a>
+</div>
+</body>
+</html>
